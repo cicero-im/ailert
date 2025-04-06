@@ -6,6 +6,7 @@ from datetime import datetime
 import requests
 import xml.etree.ElementTree as et
 from urllib.parse import urlparse
+from security import safe_requests
 
 
 def is_rss_feed(url):
@@ -15,7 +16,7 @@ def is_rss_feed(url):
             return False
 
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-        response = requests.get(url, headers=headers, timeout=10)
+        response = safe_requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
 
         content_type = response.headers.get('content-type', '').lower()

@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+from security import safe_requests
 
 class ProductHuntScanner:
     def __init__(self, site_url, graph_url, top_n=5):
@@ -14,7 +15,7 @@ class ProductHuntScanner:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
         try:
-            response = requests.get(self.site_url, headers=headers)
+            response = safe_requests.get(self.site_url, headers=headers)
             response.raise_for_status()
             soup = BeautifulSoup(response.text, "html.parser")
             last_week_section = soup.find("section", string="Last Week's Top Products")

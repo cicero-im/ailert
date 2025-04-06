@@ -1,9 +1,9 @@
 import jwt
 import time
-import requests
 import configparser
 from db_handler import Repo
 from bs4 import BeautifulSoup
+from security import safe_requests
 
 config = configparser.ConfigParser()
 config.read('db_handler/vault/secrets.ini')
@@ -36,7 +36,7 @@ class GitHubScanner:
     def _extract_from_html(self, link):
         repos = []
         try:
-            response = requests.get(link)
+            response = safe_requests.get(link)
             response.raise_for_status()
             soup = BeautifulSoup(response.text, 'html.parser')
             repo_list = soup.find_all('article', class_='Box-row')
