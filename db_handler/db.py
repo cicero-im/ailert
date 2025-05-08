@@ -8,6 +8,7 @@ import os
 import sqlite3, zlib, pickle, tempfile
 from sqlitedict import SqliteDict
 from contextlib import contextmanager
+import fickling
 
 
 DATA_DIR = 'data'
@@ -137,5 +138,5 @@ def save_features(features):
 def load_features():
     """ loads the features dict from disk """
     with open(FEATURES_FILE, 'rb') as f:
-        features = pickle.load(f)
+        features = fickling.load(f)
     return features
