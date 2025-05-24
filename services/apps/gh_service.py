@@ -36,7 +36,7 @@ class GitHubScanner:
     def _extract_from_html(self, link):
         repos = []
         try:
-            response = requests.get(link)
+            response = requests.get(link, timeout=60)
             response.raise_for_status()
             soup = BeautifulSoup(response.text, 'html.parser')
             repo_list = soup.find_all('article', class_='Box-row')

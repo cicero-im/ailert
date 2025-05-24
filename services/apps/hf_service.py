@@ -18,8 +18,8 @@ class HuggingFaceScanner:
         url = self.base_url+"/api/models"
         response = requests.get(
             url, params={"limit": top_n, "full": "True", "config": "False"},
-            headers={"Authorization":self.auth_token}
-        )
+            headers={"Authorization":self.auth_token}, 
+        timeout=60)
         return [{"title":model["modelId"],
                  "link":self.base_url+model["id"],
                  "summary": model["author"],
@@ -30,8 +30,8 @@ class HuggingFaceScanner:
         url = self.base_url+"/api/datasets"
         response = requests.get(
             url, params={"limit": top_n, "full": "False"},
-            headers={"Authorization":self.auth_token}
-        )
+            headers={"Authorization":self.auth_token}, 
+        timeout=60)
         return [{"title": dataset["id"],
                  "link": self.base_url + dataset["id"],
                  "summary": dataset["author"],
@@ -42,8 +42,8 @@ class HuggingFaceScanner:
         url = self.base_url+"/api/spaces"
         response = requests.get(
             url, params={"limit": top_n, "full": "True"},
-            headers={"Authorization":self.auth_token}
-        )
+            headers={"Authorization":self.auth_token}, 
+        timeout=60)
         return [{"title": apps["id"],
                  "link": self.base_url + apps["id"],
                  "summary": apps["author"],

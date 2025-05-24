@@ -14,7 +14,7 @@ class ProductHuntScanner:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
         try:
-            response = requests.get(self.site_url, headers=headers)
+            response = requests.get(self.site_url, headers=headers, timeout=60)
             response.raise_for_status()
             soup = BeautifulSoup(response.text, "html.parser")
             last_week_section = soup.find("section", string="Last Week's Top Products")
@@ -66,7 +66,7 @@ class ProductHuntScanner:
         }
 
         try:
-            response = requests.post(self.graph_url, json={"query": query, "variables": variables}, headers=headers)
+            response = requests.post(self.graph_url, json={"query": query, "variables": variables}, headers=headers, timeout=60)
             response.raise_for_status()
             data = response.json()
 
