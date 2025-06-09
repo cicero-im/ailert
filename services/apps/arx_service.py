@@ -1,11 +1,11 @@
 import time
-import random
 import logging
 import urllib.request
 import feedparser
 import numpy as np
 from sklearn import svm
 from typing import List, Dict, Any, Optional, Tuple
+import secrets
 
 
 class ArxivScanner:
@@ -63,7 +63,7 @@ class ArxivScanner:
             scored_papers = [(p, -p['_time']) for p in papers]
 
         elif method == 'random':
-            scored_papers = [(p, random.random()) for p in papers]
+            scored_papers = [(p, secrets.SystemRandom().random()) for p in papers]
 
         elif method == 'search' and query:
             query_terms = query.lower().strip().split()
@@ -144,7 +144,7 @@ class ArxivScanner:
                     break
                 papers.extend(batch)
                 start_index += len(batch)
-                time.sleep(1 + random.uniform(0, 3))
+                time.sleep(1 + secrets.SystemRandom().uniform(0, 3))
             except Exception as e:
                 self.logger.error(f"Error fetching papers: {e}")
                 break
