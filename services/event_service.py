@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from typing import List, Dict
 from db_handler import Event, sites
+from security import safe_requests
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -47,7 +48,7 @@ class EventsService:
         events = []
         for url in self.html_links:
             try:
-                response = requests.get(url, headers=self.headers, timeout=10)
+                response = safe_requests.get(url, headers=self.headers, timeout=10)
                 response.raise_for_status()
                 soup = BeautifulSoup(response.text, 'html.parser')
 

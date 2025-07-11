@@ -1,6 +1,5 @@
 import configparser
-
-import requests
+from security import safe_requests
 
 config = configparser.ConfigParser()
 config.read('db_handler/vault/secrets.ini')
@@ -16,7 +15,7 @@ class HuggingFaceScanner:
 
     def _top_models(self, top_n):
         url = self.base_url+"/api/models"
-        response = requests.get(
+        response = safe_requests.get(
             url, params={"limit": top_n, "full": "True", "config": "False"},
             headers={"Authorization":self.auth_token}
         )
@@ -28,7 +27,7 @@ class HuggingFaceScanner:
 
     def _top_datasets(self, top_n):
         url = self.base_url+"/api/datasets"
-        response = requests.get(
+        response = safe_requests.get(
             url, params={"limit": top_n, "full": "False"},
             headers={"Authorization":self.auth_token}
         )
@@ -40,7 +39,7 @@ class HuggingFaceScanner:
 
     def _top_apps(self, top_n):
         url = self.base_url+"/api/spaces"
-        response = requests.get(
+        response = safe_requests.get(
             url, params={"limit": top_n, "full": "True"},
             headers={"Authorization":self.auth_token}
         )
