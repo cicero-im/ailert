@@ -6,6 +6,7 @@ from datetime import datetime
 import requests
 import xml.etree.ElementTree as et
 from urllib.parse import urlparse
+import defusedxml.ElementTree
 
 
 def is_rss_feed(url):
@@ -22,7 +23,7 @@ def is_rss_feed(url):
         if not any(valid_type in content_type for valid_type in ['application/rss+xml', 'application/xml', 'text/xml']):
             return False
 
-        root = et.fromstring(response.content)
+        root = defusedxml.ElementTree.fromstring(response.content)
         rss_indicators = [
             'rss',
             'feed',
